@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="mt-5 mb-5 container">
+        <h3>Search for a specific Data: </h1>
+    </div>
+    <div class="container d-flex justify-content-center">
+        <form action='{{url_for("home")}}' method="post">
+            <fieldset>
+                <label class="form-control-label" for="station">Station : </label>
+                <input required type="text" id="station" class="form-control" name="station">
+                <label for="date" class="form-control-label">date : </label>
+                <input required type="date" class="form-control" id="date" name="date">
+                <input class="btn btn-primary mt-3" type="submit" value="search">
+            </fieldset>
+        </form>
+    </div>  
+    {%if results%}  
+        {%if check>0%}
+        <div class="container mt-5">
+            <table class="table table-striped text-center">
+                <caption style="font-size:1.3em">{{results[0].date[0:10]}}</caption>
+                <thead>
+                <tr style="font-size: 1.2em" class="table-success">
+                    <th colspan="4">{{results[0].nom}}</th>
+                </tr>
+                <tr>
+                    <th>Heure</th>
+                    <th>T(°C)</th>
+                    <th>Hummidité(%)</th>
+                    <th>Vit vent moy10min avt (m/s)</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {%for i in results%}
+                        <tr>
+                            <td>{{i.date[11:]}}</td>
+                            <td>{{i.Temperateur}}</td>
+                            <td>{{i.Hummidite}}</td>
+                            <td>{{i.VitesseVent}}</td>
+                        </tr>
+                    {%endfor%}
+                </tbody>
+            </table>
+        </div>
+        {%else%}
+        <div style="width:35%" class="container mt-5">
+            <div class="text-center alert alert-danger alert-dismissible">
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                <strong>Sorry!</strong> We couldn't find what you looking for <strong> :( </strong>
+                <p class="fw-bold"t>please check your informations again</p>
+            </div>
+        </div>
+        {%endif%}
+    {%endif%}
+{% endblock content %}
